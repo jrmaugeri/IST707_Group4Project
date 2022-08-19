@@ -91,6 +91,7 @@ set.seed(1337)
 mushrooms <- cbind(ID = rownames(mushrooms), mushrooms)
 mushrooms$ID <- factor(mushrooms$ID)
 ShroomIDS <- c(mushrooms$ID)
+# A copy of the data without an ID for association rule mining
 mushrooms_A <- subset(mushrooms, select = -c(ID))
 
 ## Testing the Generation of Association Rules
