@@ -93,6 +93,7 @@ mushrooms$ID <- factor(mushrooms$ID)
 ShroomIDS <- c(mushrooms$ID)
 # A copy of the data without an ID for association rule mining
 mushrooms_A <- subset(mushrooms, select = -c(ID))
+mushrooms_A <- subset(mushrooms_A, select = -c(veil.type))
 
 ## Testing the Generation of Association Rules
 # Mine rules with the apriori algorithm. 
