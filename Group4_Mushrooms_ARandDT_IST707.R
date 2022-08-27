@@ -104,7 +104,10 @@ summary(mrules)
 mrules <-sort(mrules, by="confidence", decreasing=TRUE)
 # Show the top rules, but only 2 digits
 options(digits=2)
-inspect(mrules[1:10])
+
+arules::inspect(mrules[1:10])
+top10 <- (mrules)
+print(top10)
 
 ## Association Rules for class Edible Mushrooms
 # Target class=e on RHS ordered by decreasing support
@@ -113,15 +116,15 @@ m_edible_rules <- apriori(mushrooms_A, parameter = list(supp = 0.10, conf = 0.9,
                     control = list(verbose=F))
 summary(m_edible_rules)
 m_edible_rules<-sort(m_edible_rules, decreasing=TRUE,by="support")
-inspect(m_edible_rules[1:10])
+arules::inspect(m_edible_rules[1:10])
 ## Association Rules for class Poisonous Mushrooms
 # Target class=p on RHS ordered by decreasing support
 m_poisonous_rules <- apriori(mushrooms_A, parameter = list(supp = 0.10, conf = 0.9, maxlen = 5 ), 
                       appearance = list(default="lhs",rhs="class=p"),
                       control = list(verbose=F))
 summary(m_poisonous_rules)
-m_poisonous_rules<-sort(m_edible_rules, decreasing=TRUE,by="support")
-inspect(m_poisonous_rules[1:10])
+m_poisonous_rules<-sort(m_poisonous_rules, decreasing=TRUE,by="support")
+arules::inspect(m_poisonous_rules[1:10])
 
 ### Association Rule Mining Visualization section
 ###############################################################################
@@ -133,11 +136,12 @@ top20
 MEdibleViz <- plot(m_edible_rules,method="graph",limit=10,interactive=TRUE)
 MEdibleViz
 # plotting top 10 rules targeting rhs class=p
-MPoisonousViz <- plot(m_edible_rules,method="graph",limit=10,interactive=TRUE)
+MPoisonousViz <- plot(m_poisonous_rules,method="graph",limit=10,interactive=TRUE)
 MPoisonousViz
 
+### Creating Training / Testing Sets
+###############################################################################
 ### Using Sequencing to build training and testing datasets
-
 (every4_indexes <- seq(1,nrow(mushrooms),4))
 m_test <- mushrooms[every4_indexes,]
 m_train <- mushrooms[-every4_indexes,]
