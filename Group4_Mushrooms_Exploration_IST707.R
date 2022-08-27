@@ -69,8 +69,8 @@ library(datasets)
 ### Reading in the data
 ###############################################################################
 
-setwd('C:/Users/Maugeri/Desktop/IST707')
-mushrooms <- read.csv('mushrooms.csv', stringsAsFactors = TRUE)
+#setwd('C:/Users/Maugeri/Desktop/IST707')
+mushrooms <- read.csv('C:/Users/Maugeri/Documents/IST707_Group4Project/mushrooms.csv', stringsAsFactors = TRUE)
 
 ### Exploring the Data
 ###############################################################################
