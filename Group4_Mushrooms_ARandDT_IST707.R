@@ -142,9 +142,9 @@ MPoisonousViz
 ### Creating Training / Testing Sets
 ###############################################################################
 ### Using Sequencing to build training and testing datasets
-(every4_indexes <- seq(1,nrow(mushrooms),4))
-m_test <- mushrooms[every4_indexes,]
-m_train <- mushrooms[-every4_indexes,]
+(every4_indexes <- seq(1,nrow(mushrooms_A),4))
+m_test <- mushrooms_A[every4_indexes,]
+m_train <- mushrooms_A[-every4_indexes,]
 
 m_train[1:5,6]
 m_test[1:5,6]
