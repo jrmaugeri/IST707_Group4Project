@@ -166,7 +166,7 @@ predictedM <- predict(fitM,m_test_NO_LABEL, type="class")
 ## Confusion Matrix
 table(predictedM,mtestlabels)
 
-'''
+
 # Testing the model
 fitT <- rpart(Ttest$Survived ~ ., data = Ttrain , method="class")
 summary(fitT)
@@ -175,4 +175,4 @@ fancyRpartPlot(fitT)
 predictedT <- predict(fitT,Ttest, type="class")
 ## Confusion Matrix
 table(predictedT,testSurvival)
-'''
+
