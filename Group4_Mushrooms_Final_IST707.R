@@ -2,10 +2,9 @@
 ###############################################################################
 # Author: Group 4 ( Joseph Maugeri, Yu Sheng Lu , Jonathan Xi)
 # Class: IST 707
-# Week: 6
-# Activity: Mushroom R data 
-# Purpose: Perform some exploratory analysis of the mushroom dataset,
-# Prepare the data for several data mining techniques
+# Week: 10
+# Activity: mushrooms.csv R data mining and classification
+# Purpose: Final Submission of R Code tandem to paper report
 #
 ### PACKAGES
 ###############################################################################
@@ -37,8 +36,7 @@ library(wordcloud)
 library(rpart)
 # ONCE install.packages("rattle")
 library(rattle)
-# ONCE install.packages("rpart.plot")
-library(rpart.plot)
+
 # ONCE install.packages("RColorBrewer")
 library(RColorBrewer)
 # ONCE install.packages("Cairo")
@@ -64,6 +62,14 @@ library(arulesViz)
 ## ONCE: install.packages("datasets")
 library(datasets)
 
+# Library for randomForest
+## ONCE: install.packages("randomForest")
+library(randomForest)
+## ONCE: install.packages("rpart.plot")
+library(rpart.plot)
+
+
+
 
 
 ### Reading in the data
@@ -71,3 +77,105 @@ library(datasets)
 
 #setwd('C:/Users/Maugeri/Desktop/IST707')
 mushrooms <- read.csv('mushrooms.csv', stringsAsFactors = TRUE)
+
+### Exploring the Data
+###############################################################################
+# Using summary to get an overview
+(summary(mushrooms))
+# Using str() to investigate the size
+(str(mushrooms))
+# using sapply() with levels() to print all levels of the dataframe
+M_Levels <- sapply(mushrooms,levels)
+(M_Levels)
+
+### Association Rule Mining
+###############################################################################
+# Lets set a seed to preserve the random numbers used in this instance
+set.seed(1337)
+
+# Adding index into the first column of DF
+mushrooms <- cbind(ID = rownames(mushrooms), mushrooms)
+mushrooms$ID <- factor(mushrooms$ID)
+ShroomIDS <- c(mushrooms$ID)
+# A copy of the data without an ID for association rule mining
+mushrooms_A <- subset(mushrooms, select = -c(ID))
+mushrooms_A <- subset(mushrooms_A, select = -c(veil.type))
+
+### Testing the Generation of Association Rules globally
+# Final tune for a "large set" of rules - should be 98
+mrules <- apriori(mushrooms_A, parameter = list(supp = 0.50, conf = 0.9, maxlen = 5 ))
+# Summary to see what is generated initially
+summary(mrules)
+# Sort the rules by confidence 
+mrules <-sort(mrules, by="lift", decreasing=TRUE)
+# Show the top rules, but only 2 digits
+options(digits=2)
+
+arules::inspect(mrules[1:10])
+top10 <- (mrules)
+print(top10)
+
+### Association Rules for class Edible Mushrooms
+# Target class=e on RHS ordered by decreasing Lift
+m_edible_rules_rhs <- apriori(mushrooms_A, parameter = list(supp = 0.30, conf = 0.9, maxlen = 5 ), 
+                              appearance = list(default="lhs",rhs="class=e"),
+                              control = list(verbose=F))
+summary(m_edible_rules_rhs)
+m_edible_rules_rhs<-sort(m_edible_rules_rhs, decreasing=TRUE,by="lift")
+arules::inspect(m_edible_rules_rhs[1:10])
+# Target class=e on LHS ordered by decreasing Lift
+m_edible_rules_lhs <- apriori(mushrooms_A, parameter = list(supp = 0.30, conf = 0.9, maxlen = 5 ), 
+                              appearance = list(default="rhs",lhs="class=e"),
+                              control = list(verbose=F))
+summary(m_edible_rules_lhs)
+m_edible_rules_lhs<-sort(m_edible_rules_lhs, decreasing=TRUE,by="lift")
+arules::inspect(m_edible_rules_lhs)
+
+### Association Rules for class Poisonous Mushrooms
+# Target class=p on RHS ordered by decreasing lift
+m_poisonous_rules_rhs <- apriori(mushrooms_A, parameter = list(supp = 0.30, conf = 0.9, maxlen = 5 ), 
+                                 appearance = list(default="lhs",rhs="class=p"),
+                                 control = list(verbose=F))
+summary(m_poisonous_rules_rhs)
+m_poisonous_rules_rhs<-sort(m_poisonous_rules_rhs, decreasing=TRUE,by="lift")
+arules::inspect(m_poisonous_rules_rhs[1:10])
+
+# Target class=p on LHS ordered by decreasing lift
+m_poisonous_rules_lhs <- apriori(mushrooms_A, parameter = list(supp = 0.30, conf = 0.9, maxlen = 5 ), 
+                                 appearance = list(default="rhs",lhs="class=p"),
+                                 control = list(verbose=F))
+summary(m_poisonous_rules_lhs)
+m_poisonous_rules_lhs<-sort(m_poisonous_rules_lhs, decreasing=TRUE,by="lift")
+arules::inspect(m_poisonous_rules_lhs)
+### Association Rule Mining Visualization section
+###############################################################################
+# visualization using aruleviz package
+# Plotting the top 10 rules globally
+top10 <- plot(mrules,method="graph",limit=10,engine="interactive")
+top10
+# plotting top 10 rules targeting rhs class=e
+MEdibleViz <- plot(m_edible_rules_rhs,method="graph",limit=10,engine="interactive")
+MEdibleViz
+# plotting top 10 rules targeting rhs class=p
+MPoisonousViz <- plot(m_poisonous_rules_rhs,method="graph",limit=10,engine="interactive")
+MPoisonousViz
+
+### Decision Trees & Random Forest
+###############################################################################
+# Decision tree using sequenced dataframes m_test and m_train
+fitM <- rpart(m_train$class ~ ., data = m_train , method="class")
+summary(fitM)
+rpart.plot::rpart.plot(fitM)
+## Predict the Test sets
+predictedM <- predict(fitM,m_test_NO_LABEL, type="class")
+## Confusion Matrix
+table(predictedM,mtestlabels)
+
+
+### Random Forest on sequenced dataframe
+rfm_m <- randomForest(class~., data=m_train, ntree=11)
+print(rfm_m)
+## Prediction of test sets
+pred_rfm_m <- predict(rfm_m, m_test_NO_LABEL, type=c("class"))
+# Confusion matrix for Random Forest
+table(pred_rfm_m,m_test$class)
