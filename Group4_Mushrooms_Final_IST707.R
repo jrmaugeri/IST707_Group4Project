@@ -69,13 +69,10 @@ library(randomForest)
 library(rpart.plot)
 
 
-
-
-
 ### Reading in the data
 ###############################################################################
 
-#setwd('C:/Users/Maugeri/Desktop/IST707')
+setwd('C:/Users/Maugeri/Desktop/IST707')
 mushrooms <- read.csv('mushrooms.csv', stringsAsFactors = TRUE)
 
 ### Exploring the Data
@@ -87,6 +84,56 @@ mushrooms <- read.csv('mushrooms.csv', stringsAsFactors = TRUE)
 # using sapply() with levels() to print all levels of the dataframe
 M_Levels <- sapply(mushrooms,levels)
 (M_Levels)
+# Visualizations of Each Feature
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = class), fill = "blue") +
+  theme(axis.text = element_text(size = 20),axis.title.x = element_text(size = 20))
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = cap.shape), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = cap.surface), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = cap.color), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = bruises), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = odor), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = gill.attachment), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = gill.spacing), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = gill.size), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = gill.color), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = stalk.shape), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = stalk.root), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = stalk.surface.above.ring), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = stalk.surface.below.ring), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = stalk.color.above.ring), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = stalk.color.below.ring), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = stalk.surface.above.ring), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = veil.type), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = veil.color), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = ring.number), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = ring.type), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = spore.print.color), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = population), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = habitat), fill = "blue")
 
 ### Association Rule Mining
 ###############################################################################
@@ -159,6 +206,21 @@ MEdibleViz
 # plotting top 10 rules targeting rhs class=p
 MPoisonousViz <- plot(m_poisonous_rules_rhs,method="graph",limit=10,engine="interactive")
 MPoisonousViz
+
+### Creating Training / Testing Sets
+###############################################################################
+### Using Sequencing to build training and testing datasets
+(every4_indexes <- seq(1,nrow(mushrooms_A),4))
+m_test <- mushrooms_A[every4_indexes,]
+m_train <- mushrooms_A[-every4_indexes,]
+
+m_train[1:5,6]
+m_test[1:5,6]
+
+# Storing the label of the class data and creating an unlabeld test dataframe
+mtestlabels <- m_test$class
+m_test_NO_LABEL <- subset(m_test, select = -c(class))
+
 
 ### Decision Trees & Random Forest
 ###############################################################################

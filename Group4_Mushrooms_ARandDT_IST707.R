@@ -84,6 +84,56 @@ mushrooms <- read.csv('mushrooms.csv', stringsAsFactors = TRUE)
 # using sapply() with levels() to print all levels of the dataframe
 M_Levels <- sapply(mushrooms,levels)
 (M_Levels)
+# Visualizations of Each Feature
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = class), fill = "blue") +
+  theme(axis.text = element_text(size = 20),axis.title.x = element_text(size = 20))
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = cap.shape), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = cap.surface), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = cap.color), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = bruises), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = odor), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = gill.attachment), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = gill.spacing), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = gill.size), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = gill.color), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = stalk.shape), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = stalk.root), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = stalk.surface.above.ring), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = stalk.surface.below.ring), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = stalk.color.above.ring), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = stalk.color.below.ring), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = stalk.surface.above.ring), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = veil.type), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = veil.color), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = ring.number), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = ring.type), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = spore.print.color), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = population), fill = "blue")
+ggplot(data = mushrooms) +
+  geom_bar(mapping = aes(x = habitat), fill = "blue")
 
 ### Association Rule Mining
 ###############################################################################
@@ -182,7 +232,7 @@ rpart.plot::rpart.plot(fitM)
 predictedM <- predict(fitM,m_test_NO_LABEL, type="class")
 ## Confusion Matrix
 table(predictedM,mtestlabels)
-
+fancyRpartPlot(fitM)
 
 ### Random Forest on sequenced dataframe
 rfm_m <- randomForest(class~., data=m_train, ntree=11)
