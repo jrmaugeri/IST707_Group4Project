@@ -86,54 +86,51 @@ M_Levels <- sapply(mushrooms,levels)
 (M_Levels)
 # Visualizations of Each Feature
 ggplot(data = mushrooms) +
-  geom_bar(mapping = aes(x = class), fill = "blue") +
-  theme(axis.text = element_text(size = 20),axis.title.x = element_text(size = 20))
+  geom_bar(mapping = aes(x = class), fill = "blue") + scale_x_discrete(labels = c('edible','poisonous'))
 ggplot(data = mushrooms) +
-  geom_bar(mapping = aes(x = cap.shape), fill = "blue")
+  geom_bar(mapping = aes(x = cap.shape), fill = "blue") + scale_x_discrete(labels = c('bell','conical', 'flat', 'knobbed', 'sunken', 'convex'))
 ggplot(data = mushrooms) +
-  geom_bar(mapping = aes(x = cap.surface), fill = "blue")
+  geom_bar(mapping = aes(x = cap.surface), fill = "blue") + scale_x_discrete(labels = c('fibrous','grooves', 'smooth', 'scaly'))
 ggplot(data = mushrooms) +
-  geom_bar(mapping = aes(x = cap.color), fill = "blue")
+  geom_bar(mapping = aes(x = cap.color), fill = "blue") + scale_x_discrete(labels = c('buff','cinnamon', 'red', 'gray', 'brown', 'pink', 'green', 'purple', 'white', 'yellow'))
 ggplot(data = mushrooms) +
-  geom_bar(mapping = aes(x = bruises), fill = "blue")
+  geom_bar(mapping = aes(x = bruises), fill = "blue") + scale_x_discrete(labels = c('no','bruises'))
 ggplot(data = mushrooms) +
-  geom_bar(mapping = aes(x = odor), fill = "blue")
+  geom_bar(mapping = aes(x = odor), fill = "blue") + scale_x_discrete(labels = c('almond','creosote', 'foul', 'anise', 'musty', 'none', 'pungent', 'spicy','fishy'))
 ggplot(data = mushrooms) +
-  geom_bar(mapping = aes(x = gill.attachment), fill = "blue")
+  geom_bar(mapping = aes(x = gill.attachment), fill = "blue") + scale_x_discrete(labels = c('attached','free'))
 ggplot(data = mushrooms) +
-  geom_bar(mapping = aes(x = gill.spacing), fill = "blue")
+  geom_bar(mapping = aes(x = gill.spacing), fill = "blue") + scale_x_discrete(labels = c('close','crowded'))
 ggplot(data = mushrooms) +
-  geom_bar(mapping = aes(x = gill.size), fill = "blue")
+  geom_bar(mapping = aes(x = gill.size), fill = "blue") + scale_x_discrete(labels = c('broad','narrow'))
 ggplot(data = mushrooms) +
-  geom_bar(mapping = aes(x = gill.color), fill = "blue")
+  geom_bar(mapping = aes(x = gill.color), fill = "blue") + scale_x_discrete(labels = c('buff','red', 'gray', 'chocolate', 'black', 'brown', 'orange', 'pink', 'green', 'purple', 'white', 'yellow'))
 ggplot(data = mushrooms) +
-  geom_bar(mapping = aes(x = stalk.shape), fill = "blue")
+  geom_bar(mapping = aes(x = stalk.shape), fill = "blue") + scale_x_discrete(labels = c('enlarging','tapering'))
 ggplot(data = mushrooms) +
-  geom_bar(mapping = aes(x = stalk.root), fill = "blue")
+  geom_bar(mapping = aes(x = stalk.root), fill = "blue") + scale_x_discrete(labels = c('missing','bulbous', 'club', 'equal', 'rooted'))
 ggplot(data = mushrooms) +
-  geom_bar(mapping = aes(x = stalk.surface.above.ring), fill = "blue")
+  geom_bar(mapping = aes(x = stalk.surface.above.ring), fill = "blue") + scale_x_discrete(labels = c('fibrous', 'silky', 'smooth', 'scaly'))
 ggplot(data = mushrooms) +
-  geom_bar(mapping = aes(x = stalk.surface.below.ring), fill = "blue")
+  geom_bar(mapping = aes(x = stalk.surface.below.ring), fill = "blue") + scale_x_discrete(labels = c('fibrous', 'silky', 'smooth', 'scaly'))
 ggplot(data = mushrooms) +
-  geom_bar(mapping = aes(x = stalk.color.above.ring), fill = "blue")
+  geom_bar(mapping = aes(x = stalk.color.above.ring), fill = "blue") + scale_x_discrete(labels = c('buff','cinnamon', 'red', 'gray', 'brown', 'orange', 'pink', 'white', 'yellow'))
 ggplot(data = mushrooms) +
-  geom_bar(mapping = aes(x = stalk.color.below.ring), fill = "blue")
+  geom_bar(mapping = aes(x = stalk.color.below.ring), fill = "blue") + scale_x_discrete(labels = c('buff','cinnamon', 'red', 'gray', 'brown', 'orange', 'pink', 'white', 'yellow'))
 ggplot(data = mushrooms) +
-  geom_bar(mapping = aes(x = stalk.surface.above.ring), fill = "blue")
+  geom_bar(mapping = aes(x = veil.type), fill = "blue") + scale_x_discrete(labels = c('partial'))
 ggplot(data = mushrooms) +
-  geom_bar(mapping = aes(x = veil.type), fill = "blue")
+  geom_bar(mapping = aes(x = veil.color), fill = "blue") + scale_x_discrete(labels = c('brown', 'orange', 'white', 'yellow'))
 ggplot(data = mushrooms) +
-  geom_bar(mapping = aes(x = veil.color), fill = "blue")
+  geom_bar(mapping = aes(x = ring.number), fill = "blue") + scale_x_discrete(labels = c('none', 'one', 'two'))
 ggplot(data = mushrooms) +
-  geom_bar(mapping = aes(x = ring.number), fill = "blue")
+  geom_bar(mapping = aes(x = ring.type), fill = "blue") + scale_x_discrete(labels = c('evanescent', 'flaring', 'large', 'none', 'pendant'))
 ggplot(data = mushrooms) +
-  geom_bar(mapping = aes(x = ring.type), fill = "blue")
+  geom_bar(mapping = aes(x = spore.print.color), fill = "blue") + scale_x_discrete(labels = c('buff','chocolate', 'black', 'brown', 'orange', 'green', 'purple', 'white', 'yellow'))
 ggplot(data = mushrooms) +
-  geom_bar(mapping = aes(x = spore.print.color), fill = "blue")
+  geom_bar(mapping = aes(x = population), fill = "blue") + scale_x_discrete(labels = c('abundant', 'clustered', 'numerous', 'scattered', 'several', 'solitary'))
 ggplot(data = mushrooms) +
-  geom_bar(mapping = aes(x = population), fill = "blue")
-ggplot(data = mushrooms) +
-  geom_bar(mapping = aes(x = habitat), fill = "blue")
+  geom_bar(mapping = aes(x = habitat), fill = "blue") + scale_x_discrete(labels = c('woods', 'grasses', 'leaves', 'meadows', 'paths', 'urban', 'waste'))
 
 ### Association Rule Mining
 ###############################################################################
